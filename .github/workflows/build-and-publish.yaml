@@ -8,7 +8,7 @@
 # - Conditional Jobs: A dedicated job is triggered for each microservice, but only if files
 #   within its specific directory have changed. This is determined by a preliminary 'changes' job.
 # - Dynamic Tagging: Docker images are tagged with a unique, time-based versioning scheme
-#   (v1.YYYYMMDD.HHMMSSfff) to ensure traceability.
+#   (v1.YYYYMMDD.HHMMSSfff) and 'latest' to ensure traceability and ease of use.
 
 name: Build and Publish Services
 
@@ -94,7 +94,9 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: |
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:latest
 
   cartservice:
     name: Build and Publish Cart Service
@@ -119,7 +121,9 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}/src
           push: true
-          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: |
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:latest
 
   checkoutservice:
     name: Build and Publish Checkout Service
@@ -144,7 +148,9 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: |
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:latest
 
   currencyservice:
     name: Build and Publish Currency Service
@@ -169,7 +175,9 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: |
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:latest
 
   emailservice:
     name: Build and Publish Email Service
@@ -194,7 +202,9 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: |
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:latest
 
   frontend:
     name: Build and Publish Frontend Service
@@ -219,7 +229,9 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: |
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:latest
 
   loadgenerator:
     name: Build and Publish Load Generator
@@ -244,7 +256,9 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: |
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:latest
 
   paymentservice:
     name: Build and Publish Payment Service
@@ -269,7 +283,9 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: |
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:latest
 
   productcatalogservice:
     name: Build and Publish Product Catalog Service
@@ -294,7 +310,9 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: |
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:latest
 
   recommendationservice:
     name: Build and Publish Recommendation Service
@@ -319,7 +337,9 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: |
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:latest
 
   shippingservice:
     name: Build and Publish Shipping Service
@@ -344,7 +364,9 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: |
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:latest
 
   shoppingassistantservice:
     name: Build and Publish Shopping Assistant Service
@@ -369,4 +391,6 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: |
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+            ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:latest
