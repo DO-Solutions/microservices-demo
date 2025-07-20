@@ -36,3 +36,4 @@ This service has an `EXTRA_LATENCY` environment variable. This will inject a sle
 to the server.
 
 For example, use `EXTRA_LATENCY="5.5s"` to sleep for 5.5 seconds on every request.
+
