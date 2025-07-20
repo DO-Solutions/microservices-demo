@@ -21,7 +21,7 @@
 devDeployment: &devDeployment true
 
 images:
-  repository: us-central1-docker.pkg.dev/google-samples/microservices-demo
+  repository: ghcr.io/do-solutions
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 

@@ -73,8 +73,7 @@ spec:
               - ALL
           privileged: false
           readOnlyRootFilesystem: true
-{{/*        image: {{ .Values.images.repository }}/{{ .Values.cartService.name }}:{{ .Values.images.tag | default .Chart.AppVersion }}*/}}
-        image:  registry.digitalocean.com/jjk3-sandbox/cartstore:latest
+        image: {{ .Values.images.repository }}/microservices-demo-{{ .Values.cartService.name }}:{{ .Values.images.tag | default .Chart.AppVersion }}
         ports:
         - containerPort: 7070
         env:
