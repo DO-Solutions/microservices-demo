@@ -1,0 +1,203 @@
+# This GitHub Actions workflow is designed for the DO-Solutions/microservices-demo monorepo.
+# It automates the building and publishing of Docker images for each microservice to the
+# GitHub Container Registry (GHCR).
+#
+# Key Features:
+# - Path-based triggers: The workflow runs only when changes are pushed to the 'main' branch
+#   within the 'src/' directory.
+# - Conditional Jobs: A dedicated job is triggered for each microservice, but only if files
+#   within its specific directory have changed. This is determined by a preliminary 'changes' job.
+# - Dynamic Tagging: Docker images are tagged with a unique, time-based versioning scheme
+#   (v1.YYYYMMDD.HHMMSSfff) to ensure traceability.
+# - Reusable Logic: YAML anchors are used to define the build-and-publish steps once, keeping
+#   the workflow DRY (Don't Repeat Yourself) and easy to maintain.
+
+name: Build and Publish Services
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+
+# Reusable steps for building, tagging, and pushing a Docker image.
+# This anchor (`x-build-and-publish-steps`) is referenced by each service's job.
+x-build-and-publish-steps: &build-and-publish-steps
+  - name: Log in to GitHub Container Registry
+    uses: docker/login-action@v3
+    with:
+      registry: ghcr.io
+      username: ${{ github.actor }}
+      password: ${{ secrets.GITHUB_TOKEN }}
+
+  - name: Generate unique image tag
+    id: image_tag
+    run: echo "TAG=v1.$(date +'%Y%m%d.%H%M%S%3N')" >> "$GITHUB_OUTPUT"
+
+  - name: Build and push Docker image
+    uses: docker/build-push-action@v5
+    with:
+      context: src/${{ env.SERVICE_NAME }}
+      push: true
+      tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+
+jobs:
+  # This job checks which service directories have changed and sets corresponding outputs.
+  changes:
+    name: Detect Changed Services
+    runs-on: ubuntu-latest
+    outputs:
+      adservice: ${{ steps.filter.outputs.adservice }}
+      cartservice: ${{ steps.filter.outputs.cartservice }}
+      checkoutservice: ${{ steps.filter.outputs.checkoutservice }}
+      currencyservice: ${{ steps.filter.outputs.currencyservice }}
+      emailservice: ${{ steps.filter.outputs.emailservice }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+      loadgenerator: ${{ steps.filter.outputs.loadgenerator }}
+      paymentservice: ${{ steps.filter.outputs.paymentservice }}
+      productcatalogservice: ${{ steps.filter.outputs.productcatalogservice }}
+      recommendationservice: ${{ steps.filter.outputs.recommendationservice }}
+      shippingservice: ${{ steps.filter.outputs.shippingservice }}
+      shoppingassistantservice: ${{ steps.filter.outputs.shoppingassistantservice }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            adservice:
+              - 'src/adservice/**'
+            cartservice:
+              - 'src/cartservice/**'
+            checkoutservice:
+              - 'src/checkoutservice/**'
+            currencyservice:
+              - 'src/currencyservice/**'
+            emailservice:
+              - 'src/emailservice/**'
+            frontend:
+              - 'src/frontend/**'
+            loadgenerator:
+              - 'src/loadgenerator/**'
+            paymentservice:
+              - 'src/paymentservice/**'
+            productcatalogservice:
+              - 'src/productcatalogservice/**'
+            recommendationservice:
+              - 'src/recommendationservice/**'
+            shippingservice:
+              - 'src/shippingservice/**'
+            shoppingassistantservice:
+              - 'src/shoppingassistantservice/**'
+
+  # The following jobs are defined for each microservice. Each job runs only if the 'changes'
+  # job detects a change in its corresponding directory.
+
+  adservice:
+    name: Build and Publish Ad Service
+    needs: changes
+    if: needs.changes.outputs.adservice == 'true'
+    runs-on: ubuntu-latest
+    env:
+      SERVICE_NAME: adservice
+    steps: *build-and-publish-steps
+
+  cartservice:
+    name: Build and Publish Cart Service
+    needs: changes
+    if: needs.changes.outputs.cartservice == 'true'
+    runs-on: ubuntu-latest
+    env:
+      SERVICE_NAME: cartservice
+    steps: *build-and-publish-steps
+
+  checkoutservice:
+    name: Build and Publish Checkout Service
+    needs: changes
+    if: needs.changes.outputs.checkoutservice == 'true'
+    runs-on: ubuntu-latest
+    env:
+      SERVICE_NAME: checkoutservice
+    steps: *build-and-publish-steps
+
+  currencyservice:
+    name: Build and Publish Currency Service
+    needs: changes
+    if: needs.changes.outputs.currencyservice == 'true'
+    runs-on: ubuntu-latest
+    env:
+      SERVICE_NAME: currencyservice
+    steps: *build-and-publish-steps
+
+  emailservice:
+    name: Build and Publish Email Service
+    needs: changes
+    if: needs.changes.outputs.emailservice == 'true'
+    runs-on: ubuntu-latest
+    env:
+      SERVICE_NAME: emailservice
+    steps: *build-and-publish-steps
+
+  frontend:
+    name: Build and Publish Frontend Service
+    needs: changes
+    if: needs.changes.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+    env:
+      SERVICE_NAME: frontend
+    steps: *build-and-publish-steps
+
+  loadgenerator:
+    name: Build and Publish Load Generator
+    needs: changes
+    if: needs.changes.outputs.loadgenerator == 'true'
+    runs-on: ubuntu-latest
+    env:
+      SERVICE_NAME: loadgenerator
+    steps: *build-and-publish-steps
+
+  paymentservice:
+    name: Build and Publish Payment Service
+    needs: changes
+    if: needs.changes.outputs.paymentservice == 'true'
+    runs-on: ubuntu-latest
+    env:
+      SERVICE_NAME: paymentservice
+    steps: *build-and-publish-steps
+
+  productcatalogservice:
+    name: Build and Publish Product Catalog Service
+    needs: changes
+    if: needs.changes.outputs.productcatalogservice == 'true'
+    runs-on: ubuntu-latest
+    env:
+      SERVICE_NAME: productcatalogservice
+    steps: *build-and-publish-steps
+
+  recommendationservice:
+    name: Build and Publish Recommendation Service
+    needs: changes
+    if: needs.changes.outputs.recommendationservice == 'true'
+    runs-on: ubuntu-latest
+    env:
+      SERVICE_NAME: recommendationservice
+    steps: *build-and-publish-steps
+
+  shippingservice:
+    name: Build and Publish Shipping Service
+    needs: changes
+    if: needs.changes.outputs.shippingservice == 'true'
+    runs-on: ubuntu-latest
+    env:
+      SERVICE_NAME: shippingservice
+    steps: *build-and-publish-steps
+
+  shoppingassistantservice:
+    name: Build and Publish Shopping Assistant Service
+    needs: changes
+    if: needs.changes.outputs.shoppingassistantservice == 'true'
+    runs-on: ubuntu-latest
+    env:
+      SERVICE_NAME: shoppingassistantservice
+    steps: *build-and-publish-steps
