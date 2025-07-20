@@ -1,4 +1,4 @@
-# This GitHub Actions workflow is designed for the DO-Solutions/microservices-demo monorepo.
+# This GitHub Actions workflow is designed for the do-solutions/microservices-demo monorepo.
 # It automates the building and publishing of Docker images for each microservice to the
 # GitHub Container Registry (GHCR).
 #
@@ -93,7 +93,7 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
   cartservice:
     name: Build and Publish Cart Service
@@ -117,7 +117,7 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
   checkoutservice:
     name: Build and Publish Checkout Service
@@ -141,7 +141,7 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
   currencyservice:
     name: Build and Publish Currency Service
@@ -165,7 +165,7 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
   emailservice:
     name: Build and Publish Email Service
@@ -189,7 +189,7 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
   frontend:
     name: Build and Publish Frontend Service
@@ -213,7 +213,7 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
   loadgenerator:
     name: Build and Publish Load Generator
@@ -237,7 +237,7 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
   paymentservice:
     name: Build and Publish Payment Service
@@ -261,7 +261,7 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
   productcatalogservice:
     name: Build and Publish Product Catalog Service
@@ -285,7 +285,7 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
   recommendationservice:
     name: Build and Publish Recommendation Service
@@ -309,7 +309,7 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
   shippingservice:
     name: Build and Publish Shipping Service
@@ -333,7 +333,7 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
   shoppingassistantservice:
     name: Build and Publish Shopping Assistant Service
@@ -357,4 +357,4 @@ jobs:
         with:
           context: src/${{ env.SERVICE_NAME }}
           push: true
-          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
+          tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
