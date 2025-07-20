@@ -9,8 +9,6 @@
 #   within its specific directory have changed. This is determined by a preliminary 'changes' job.
 # - Dynamic Tagging: Docker images are tagged with a unique, time-based versioning scheme
 #   (v1.YYYYMMDD.HHMMSSfff) to ensure traceability.
-# - Reusable Logic: YAML anchors are used to define the build-and-publish steps once, keeping
-#   the workflow DRY (Don't Repeat Yourself) and easy to maintain.
 
 name: Build and Publish Services
 
@@ -20,27 +18,6 @@ on:
       - main
     paths:
       - 'src/**'
-
-# Reusable steps for building, tagging, and pushing a Docker image.
-# This anchor (`x-build-and-publish-steps`) is referenced by each service's job.
-x-build-and-publish-steps: &build-and-publish-steps
-  - name: Log in to GitHub Container Registry
-    uses: docker/login-action@v3
-    with:
-      registry: ghcr.io
-      username: ${{ github.actor }}
-      password: ${{ secrets.GITHUB_TOKEN }}
-
-  - name: Generate unique image tag
-    id: image_tag
-    run: echo "TAG=v1.$(date +'%Y%m%d.%H%M%S%3N')" >> "$GITHUB_OUTPUT"
-
-  - name: Build and push Docker image
-    uses: docker/build-push-action@v5
-    with:
-      context: src/${{ env.SERVICE_NAME }}
-      push: true
-      tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
 jobs:
   # This job checks which service directories have changed and sets corresponding outputs.
@@ -101,7 +78,22 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SERVICE_NAME: adservice
-    steps: *build-and-publish-steps
+    steps:
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate unique image tag
+        id: image_tag
+        run: echo "TAG=v1.$(date +'%Y%m%d.%H%M%S%3N')" >> "$GITHUB_OUTPUT"
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: src/${{ env.SERVICE_NAME }}
+          push: true
+          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
   cartservice:
     name: Build and Publish Cart Service
@@ -110,7 +102,22 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SERVICE_NAME: cartservice
-    steps: *build-and-publish-steps
+    steps:
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate unique image tag
+        id: image_tag
+        run: echo "TAG=v1.$(date +'%Y%m%d.%H%M%S%3N')" >> "$GITHUB_OUTPUT"
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: src/${{ env.SERVICE_NAME }}
+          push: true
+          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
   checkoutservice:
     name: Build and Publish Checkout Service
@@ -119,7 +126,22 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SERVICE_NAME: checkoutservice
-    steps: *build-and-publish-steps
+    steps:
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate unique image tag
+        id: image_tag
+        run: echo "TAG=v1.$(date +'%Y%m%d.%H%M%S%3N')" >> "$GITHUB_OUTPUT"
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: src/${{ env.SERVICE_NAME }}
+          push: true
+          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
   currencyservice:
     name: Build and Publish Currency Service
@@ -128,7 +150,22 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SERVICE_NAME: currencyservice
-    steps: *build-and-publish-steps
+    steps:
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate unique image tag
+        id: image_tag
+        run: echo "TAG=v1.$(date +'%Y%m%d.%H%M%S%3N')" >> "$GITHUB_OUTPUT"
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: src/${{ env.SERVICE_NAME }}
+          push: true
+          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
   emailservice:
     name: Build and Publish Email Service
@@ -137,7 +174,22 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SERVICE_NAME: emailservice
-    steps: *build-and-publish-steps
+    steps:
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate unique image tag
+        id: image_tag
+        run: echo "TAG=v1.$(date +'%Y%m%d.%H%M%S%3N')" >> "$GITHUB_OUTPUT"
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: src/${{ env.SERVICE_NAME }}
+          push: true
+          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
   frontend:
     name: Build and Publish Frontend Service
@@ -146,7 +198,22 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SERVICE_NAME: frontend
-    steps: *build-and-publish-steps
+    steps:
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate unique image tag
+        id: image_tag
+        run: echo "TAG=v1.$(date +'%Y%m%d.%H%M%S%3N')" >> "$GITHUB_OUTPUT"
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: src/${{ env.SERVICE_NAME }}
+          push: true
+          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
   loadgenerator:
     name: Build and Publish Load Generator
@@ -155,7 +222,22 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SERVICE_NAME: loadgenerator
-    steps: *build-and-publish-steps
+    steps:
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate unique image tag
+        id: image_tag
+        run: echo "TAG=v1.$(date +'%Y%m%d.%H%M%S%3N')" >> "$GITHUB_OUTPUT"
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: src/${{ env.SERVICE_NAME }}
+          push: true
+          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
   paymentservice:
     name: Build and Publish Payment Service
@@ -164,7 +246,22 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SERVICE_NAME: paymentservice
-    steps: *build-and-publish-steps
+    steps:
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate unique image tag
+        id: image_tag
+        run: echo "TAG=v1.$(date +'%Y%m%d.%H%M%S%3N')" >> "$GITHUB_OUTPUT"
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: src/${{ env.SERVICE_NAME }}
+          push: true
+          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
   productcatalogservice:
     name: Build and Publish Product Catalog Service
@@ -173,7 +270,22 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SERVICE_NAME: productcatalogservice
-    steps: *build-and-publish-steps
+    steps:
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate unique image tag
+        id: image_tag
+        run: echo "TAG=v1.$(date +'%Y%m%d.%H%M%S%3N')" >> "$GITHUB_OUTPUT"
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: src/${{ env.SERVICE_NAME }}
+          push: true
+          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
   recommendationservice:
     name: Build and Publish Recommendation Service
@@ -182,7 +294,22 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SERVICE_NAME: recommendationservice
-    steps: *build-and-publish-steps
+    steps:
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate unique image tag
+        id: image_tag
+        run: echo "TAG=v1.$(date +'%Y%m%d.%H%M%S%3N')" >> "$GITHUB_OUTPUT"
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: src/${{ env.SERVICE_NAME }}
+          push: true
+          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
   shippingservice:
     name: Build and Publish Shipping Service
@@ -191,7 +318,22 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SERVICE_NAME: shippingservice
-    steps: *build-and-publish-steps
+    steps:
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate unique image tag
+        id: image_tag
+        run: echo "TAG=v1.$(date +'%Y%m%d.%H%M%S%3N')" >> "$GITHUB_OUTPUT"
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: src/${{ env.SERVICE_NAME }}
+          push: true
+          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
   shoppingassistantservice:
     name: Build and Publish Shopping Assistant Service
@@ -200,4 +342,19 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SERVICE_NAME: shoppingassistantservice
-    steps: *build-and-publish-steps
+    steps:
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate unique image tag
+        id: image_tag
+        run: echo "TAG=v1.$(date +'%Y%m%d.%H%M%S%3N')" >> "$GITHUB_OUTPUT"
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: src/${{ env.SERVICE_NAME }}
+          push: true
+          tags: ghcr.io/DO-Solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
