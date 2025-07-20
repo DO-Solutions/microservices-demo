@@ -117,7 +117,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: src/${{ env.SERVICE_NAME }}
+          context: src/${{ env.SERVICE_NAME }}/src
           push: true
           tags: ghcr.io/do-solutions/microservices-demo-${{ env.SERVICE_NAME }}:${{ steps.image_tag.outputs.TAG }}
 
