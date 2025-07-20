@@ -79,6 +79,7 @@ jobs:
     env:
       SERVICE_NAME: adservice
     steps:
+      - uses: actions/checkout@v4
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -103,6 +104,7 @@ jobs:
     env:
       SERVICE_NAME: cartservice
     steps:
+      - uses: actions/checkout@v4
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -127,6 +129,7 @@ jobs:
     env:
       SERVICE_NAME: checkoutservice
     steps:
+      - uses: actions/checkout@v4
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -151,6 +154,7 @@ jobs:
     env:
       SERVICE_NAME: currencyservice
     steps:
+      - uses: actions/checkout@v4
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -175,6 +179,7 @@ jobs:
     env:
       SERVICE_NAME: emailservice
     steps:
+      - uses: actions/checkout@v4
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -199,6 +204,7 @@ jobs:
     env:
       SERVICE_NAME: frontend
     steps:
+      - uses: actions/checkout@v4
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -223,6 +229,7 @@ jobs:
     env:
       SERVICE_NAME: loadgenerator
     steps:
+      - uses: actions/checkout@v4
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -247,6 +254,7 @@ jobs:
     env:
       SERVICE_NAME: paymentservice
     steps:
+      - uses: actions/checkout@v4
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -271,6 +279,7 @@ jobs:
     env:
       SERVICE_NAME: productcatalogservice
     steps:
+      - uses: actions/checkout@v4
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -295,6 +304,7 @@ jobs:
     env:
       SERVICE_NAME: recommendationservice
     steps:
+      - uses: actions/checkout@v4
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -319,6 +329,7 @@ jobs:
     env:
       SERVICE_NAME: shippingservice
     steps:
+      - uses: actions/checkout@v4
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -343,6 +354,7 @@ jobs:
     env:
       SERVICE_NAME: shoppingassistantservice
     steps:
+      - uses: actions/checkout@v4
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
