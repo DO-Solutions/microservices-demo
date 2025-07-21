@@ -1,0 +1,22 @@
+This project is based in part on code from the "GoogleCloudPlatform/microservices-demo" repository,
+available at: https://github.com/GoogleCloudPlatform/microservices-demo
+
+Copyright 2020 Google LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Modifications have been made to the original codebase. These modifications may include:
+- Branding or UI changes (e.g., footer text, logos)
+- Changes to infrastructure configuration (e.g., Kubernetes, Helm, Dockerfiles)
+- Additional services or altered service logic
+- Adjustments for compatibility with other platforms or providers
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+See the LICENSE file for the full text of the Apache 2.0 license.

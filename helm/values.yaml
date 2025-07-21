@@ -84,6 +84,11 @@ adService:
 cartService:
   create: true
   name: cartservice
+  database:
+    # The name of the secret containing the connection string.
+    # In a dev deployment, this secret is created by the chart.
+    # In a prod deployment, this secret must be created manually before deploying.
+    secretName: cart-database
   resources:
     requests:
       cpu: 200m
@@ -208,22 +213,6 @@ shippingService:
       cpu: 200m
       memory: 128Mi
 
-cartDatabase:
-  # Specifies the type of the cartservice's database, could be either redis or spanner.
-  type: redis
-  connectionString: "redis-cart:6379"
-  inClusterRedis:
-    create: true
-    name: redis-cart
-    # Uses the public redis image from Docker Hub, otherwise will use the images.repository.
-    publicRepository: true
-  externalRedisTlsOrigination:
-    enable: false
-    name: exernal-redis-tls-origination
-    endpointAddress: ""
-    endpointPort: ""
-    certificate: ""
-
 # @TODO: This service is not currently available in Helm.
 # https://github.com/GoogleCloudPlatform/microservices-demo/tree/main/kustomize/components/shopping-assistant
 shoppingAssistantService:
@@ -232,4 +221,20 @@ shoppingAssistantService:
 
 postgresql:
   enabled: *devDeployment
+<<<<<<< Updated upstream
+=======
+  primary:
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
+      whenDeleted: Delete
+
+cart-valkey:
+  # Deploys a Valkey instance for development when devDeployment is true.
+  enabled: *devDeployment
+  # Disable authentication for the local development instance.
+  auth:
+    enabled: false
+
+
+>>>>>>> Stashed changes
 
