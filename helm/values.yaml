@@ -71,7 +71,7 @@ adService:
     # The name of the configmap containing the non-sensitive connection details.
     # In a dev deployment, this configmap is created by the chart.
     # In a prod deployment, this configmap must be created manually before deploying.
-    configMapName: adservice-database-config
+    configMapName: adservice-database-configuration
     # The name of the secret containing the database password.
     # In a dev deployment, this secret is created by the postgresql subchart.
     # In a prod deployment, this secret must be created manually before deploying.
@@ -85,7 +85,6 @@ adService:
       memory: 300Mi
 
 adservicePostgresql:
-  enabled: true
   fullnameOverride: adservice-database
   nameOverride: adservice-database
   auth:

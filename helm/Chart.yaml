@@ -42,7 +42,7 @@ dependencies:
     alias: adservicePostgresql
     version: "14.0.5"
     repository: "https://charts.bitnami.com/bitnami"
-    condition: adservicePostgresql.enabled
+    condition: devDeployment
   # Valkey chart for cart service
   - name: valkey
     alias: cartValkey
