@@ -133,8 +133,8 @@ public final class AdService {
   }
 
   private void ensureDatabaseExists(String host, String port, String user, String password, String sslmode, String dbName) throws SQLException {
-    String postgresJdbcUrl = String.format("jdbc:postgresql://%s:%s/postgres?sslmode=%s",
-        host, port, sslmode);
+    String postgresJdbcUrl = String.format("jdbc:postgresql://%s:%s/%s?sslmode=%s",
+        host, port, dbName, sslmode);
     Properties props = new Properties();
     props.setProperty("user", user);
     props.setProperty("password", password);
