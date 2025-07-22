@@ -1,0 +1,13 @@
+{{- if and .Values.adService.create .Values.devDeployment }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.adService.database.configMapName }}
+  namespace: {{ .Release.Namespace }}
+data:
+  DB_HOST: {{ .Values.adservicePostgresql.nameOverride }}
+  DB_PORT: "5432"
+  DB_USER: {{ .Values.adservicePostgresql.auth.username }}
+  DB_NAME: {{ .Values.adservicePostgresql.auth.database }}
+  DB_SSL_MODE: "disable"
+{{- end -}}

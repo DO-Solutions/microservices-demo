@@ -68,8 +68,12 @@ adService:
   create: true
   name: adservice
   database:
-    # The name of the secret containing the connection string.
-    # In a dev deployment, this secret is created by the chart.
+    # The name of the configmap containing the non-sensitive connection details.
+    # In a dev deployment, this configmap is created by the chart.
+    # In a prod deployment, this configmap must be created manually before deploying.
+    configMapName: adservice-database-config
+    # The name of the secret containing the database password.
+    # In a dev deployment, this secret is created by the postgresql subchart.
     # In a prod deployment, this secret must be created manually before deploying.
     secretName: adservice-database
   resources:
@@ -79,6 +83,15 @@ adService:
     limits:
       cpu: 300m
       memory: 300Mi
+
+adservicePostgresql:
+  enabled: true
+  fullnameOverride: adservice-database
+  nameOverride: adservice-database
+  auth:
+    username: postgres
+    database: adservice
+
 
 cartService:
   create: true
@@ -96,13 +109,6 @@ cartService:
       cpu: 300m
       memory: 256Mi
 
-adservicePostgresql:
-  enabled: true
-  fullnameOverride: adservice-database
-  nameOverride: adservice-database
-  auth:
-    username: postgres
-    database: adservice
 
 cartValkey:
   fullnameOverride: cartservice-database
