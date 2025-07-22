@@ -91,6 +91,10 @@ adservicePostgresql:
   auth:
     username: postgres
     database: adservice
+  primary:
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
+      whenDeleted: Delete
 
 
 cartService:
@@ -118,6 +122,10 @@ cartValkey:
   # Disable authentication for the local development instance.
   auth:
     enabled: false
+  primary:
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
+      whenDeleted: Delete
 
 checkoutService:
   create: true

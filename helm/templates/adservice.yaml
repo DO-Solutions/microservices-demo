@@ -72,12 +72,12 @@ spec:
         image: {{ .Values.images.repository }}/microservices-demo-{{ .Values.adService.name }}:{{ .Values.images.tag | default .Chart.AppVersion }}
         ports:
         - containerPort: 9555
+        envFrom:
+          - configMapRef:
+              name: {{ .Values.adService.database.configMapName }}
         env:
         - name: PORT
           value: "9555"
-        envFrom:
-        - configMapRef:
-            name: {{ .Values.adService.database.configMapName }}
         # The connection string in the secret may contain a reference to the password,
         # so we need to ensure the password is also available as an environment variable.
         - name: POSTGRES_PASSWORD
