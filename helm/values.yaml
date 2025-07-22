@@ -89,7 +89,7 @@ cartService:
     # The name of the secret containing the connection string.
     # In a dev deployment, this secret is created by the chart.
     # In a prod deployment, this secret must be created manually before deploying.
-    secretName: cart-database
+    secretName: cartservice-database
   resources:
     requests:
       cpu: 200m
@@ -99,7 +99,8 @@ cartService:
       memory: 256Mi
 
 cartValkey:
-  nameOverride: cart-database
+  fullnameOverride: cartservice-database
+  nameOverride: cartservice-database
   # Set architecture to standalone to only deploy a primary
   architecture: standalone
   # Disable authentication for the local development instance.
