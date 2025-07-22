@@ -18,7 +18,8 @@
 
 
 
-devDeployment: &devDeployment true
+# when true then local resources such as postgresql and valkey are deployed
+devDeployment: true
 
 images:
   repository: ghcr.io/do-solutions
@@ -96,6 +97,14 @@ cartService:
     limits:
       cpu: 300m
       memory: 256Mi
+
+cartValkey:
+  nameOverride: cart-database
+  # Set architecture to standalone to only deploy a primary
+  architecture: standalone
+  # Disable authentication for the local development instance.
+  auth:
+    enabled: false
 
 checkoutService:
   create: true
@@ -220,21 +229,7 @@ shoppingAssistantService:
   name: shoppingassistantservice
 
 postgresql:
-  enabled: *devDeployment
-<<<<<<< Updated upstream
-=======
   primary:
     persistentVolumeClaimRetentionPolicy:
       enabled: true
       whenDeleted: Delete
-
-cart-valkey:
-  # Deploys a Valkey instance for development when devDeployment is true.
-  enabled: *devDeployment
-  # Disable authentication for the local development instance.
-  auth:
-    enabled: false
-
-
->>>>>>> Stashed changes
-

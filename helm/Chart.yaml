@@ -41,10 +41,10 @@ dependencies:
   - name: postgresql
     version: "14.0.5"
     repository: "https://charts.bitnami.com/bitnami"
-    condition: postgresql.enabled
+    condition: devDeployment
   # Valkey chart for cart service
   - name: valkey
-    alias: cart-valkey
+    alias: cartValkey
     version: "3.0.22"
     repository: "https://charts.bitnami.com/bitnami"
-    condition: cart-valkey.enabled
+    condition: devDeployment

@@ -1,0 +1,7 @@
+devDeployment: false
+images:
+  tag: "latest"
+
+adService:
+  create: false
+
