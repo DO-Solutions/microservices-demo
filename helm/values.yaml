@@ -67,13 +67,11 @@ securityContext:
 adService:
   create: true
   name: adservice
-  db:
-    username: postgres
-    name: adservice
-    port: 5432
-    # Production database settings
-    prodHost: ""
-    prodPasswordSecretName: ""
+  database:
+    # The name of the secret containing the connection string.
+    # In a dev deployment, this secret is created by the chart.
+    # In a prod deployment, this secret must be created manually before deploying.
+    secretName: adservice-database
   resources:
     requests:
       cpu: 200m
@@ -97,6 +95,14 @@ cartService:
     limits:
       cpu: 300m
       memory: 256Mi
+
+adservicePostgresql:
+  enabled: true
+  fullnameOverride: adservice-database
+  nameOverride: adservice-database
+  auth:
+    username: postgres
+    database: adservice
 
 cartValkey:
   fullnameOverride: cartservice-database
@@ -229,8 +235,4 @@ shoppingAssistantService:
   create: false
   name: shoppingassistantservice
 
-postgresql:
-  primary:
-    persistentVolumeClaimRetentionPolicy:
-      enabled: true
-      whenDeleted: Delete
+

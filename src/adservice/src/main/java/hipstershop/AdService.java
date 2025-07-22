@@ -63,28 +63,25 @@ public final class AdService {
 
     logger.info("connecting to database...");
     try {
-      String dbHost = System.getenv("DB_HOST");
-      String dbPort = System.getenv("DB_PORT");
-      String dbName = System.getenv("DB_NAME");
-      String dbUser = System.getenv("DB_USER");
-      String dbPassword = System.getenv("DB_PASSWORD");
-      String dbSslMode = System.getenv("DB_SSL_MODE");
+      String connectionString = System.getenv("DB_CONNECTION_STRING");
+      String password = System.getenv("POSTGRES_PASSWORD");
 
-      // Ensure all required environment variables are set.
-      if (dbHost == null || dbPort == null || dbName == null || dbUser == null || dbPassword == null || dbSslMode == null) {
-        logger.fatal("Database connection information is missing from environment variables.");
-        throw new IOException("Missing database environment variables.");
+      if (connectionString == null) {
+        logger.fatal("DB_CONNECTION_STRING environment variable is not set.");
+        throw new IOException("DB_CONNECTION_STRING environment variable is not set.");
       }
 
-      String jdbcUrl = String.format("jdbc:postgresql://%s:%s/%s?user=%s&password=%s&sslmode=%s",
-          dbHost, dbPort, dbName, dbUser, dbPassword, dbSslMode);
+      if (password != null) {
+        connectionString = connectionString.replace("$(POSTGRES_PASSWORD)", password);
+      }
+
+      String jdbcUrl = connectionString.replace("postgresql://", "jdbc:postgresql://");
+
       // Step 1: Ensure the database exists.
-      ensureDatabaseExists(dbHost, dbPort, dbUser, dbPassword, dbSslMode, dbName);
+      ensureDatabaseExists(jdbcUrl);
 
       // Step 2: Connect to the application database.
-      String appJdbcUrl = String.format("jdbc:postgresql://%s:%s/%s?user=%s&password=%s&sslmode=%s",
-          dbHost, dbPort, dbName, dbUser, dbPassword, dbSslMode);
-      this.dbConnection = DriverManager.getConnection(appJdbcUrl);
+      this.dbConnection = DriverManager.getConnection(jdbcUrl);
       logger.info("database connection established");
 
       // Step 3: Initialize the table.
@@ -129,9 +126,11 @@ public final class AdService {
     }
   }
 
-  private void ensureDatabaseExists(String host, String port, String user, String password, String sslmode, String dbName) throws SQLException {
-    String postgresJdbcUrl = String.format("jdbc:postgresql://%s:%s/postgres?user=%s&password=%s&sslmode=%s",
-        host, port, user, password, sslmode);
+  private void ensureDatabaseExists(String appJdbcUrl) throws SQLException {
+    // Extract dbName and the base URL for the 'postgres' database from the application JDBC URL.
+    String dbName = appJdbcUrl.substring(appJdbcUrl.lastIndexOf('/') + 1).split("\\?")[0];
+    String postgresJdbcUrl = appJdbcUrl.replace("/" + dbName, "/postgres");
+
     try (Connection conn = DriverManager.getConnection(postgresJdbcUrl)) {
       try (Statement stmt = conn.createStatement()) {
         ResultSet rs = stmt.executeQuery(String.format("SELECT 1 FROM pg_database WHERE datname = '%s'", dbName));

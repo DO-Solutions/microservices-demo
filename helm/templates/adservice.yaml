@@ -75,34 +75,26 @@ spec:
         env:
         - name: PORT
           value: "9555"
-        - name: DB_USER
-          value: {{ .Values.adService.db.username | quote }}
-        - name: DB_PASSWORD
+        - name: DB_CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.adService.database.secretName }}
+              key: connectionString
+        # The connection string in the secret may contain a reference to the password,
+        # so we need to ensure the password is also available as an environment variable.
+        - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
               {{- if .Values.devDeployment }}
-              name: {{ .Release.Name }}-postgresql
+              name: {{ .Values.adservicePostgresql.fullnameOverride }}
               key: postgres-password
               {{- else }}
-              name: {{ .Values.adService.db.prodPasswordSecretName }}
+              # In a production environment, the secret containing the database password
+              # is expected to be created externally (e.g., by Terraform).
+              # The name of this secret should be configured in values.yaml.
+              name: {{ .Values.adService.database.secretName }}
               key: password
               {{- end }}
-        - name: DB_HOST
-          {{- if .Values.devDeployment }}
-          value: {{ printf "%s-postgresql" .Release.Name | quote }}
-          {{- else }}
-          value: {{ .Values.adService.db.prodHost | quote }}
-          {{- end }}
-        - name: DB_PORT
-          value: {{ .Values.adService.db.port | quote }}
-        - name: DB_NAME
-          value: {{ .Values.adService.db.name | quote }}
-        - name: DB_SSL_MODE
-          {{- if .Values.devDeployment }}
-          value: "disable"
-          {{- else }}
-          value: "require"
-          {{- end }}
         resources:
           {{- toYaml .Values.adService.resources | nindent 10 }}
         readinessProbe:
