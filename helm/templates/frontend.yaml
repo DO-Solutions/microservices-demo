@@ -155,6 +155,12 @@ kind: Service
 metadata:
   name: {{ .Values.frontend.name }}-external
   namespace: {{ .Release.Namespace }}
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-name: {{ .Release.Name }}
+    service.beta.kubernetes.io/do-loadbalancer-type: "REGIONAL_NETWORK"
+  {{- if .Values.frontend.fqdn }}
+    external-dns.alpha.kubernetes.io/hostname: "{{ .Values.frontend.fqdn }}"
+  {{- end }}
 spec:
   type: LoadBalancer
   selector:
