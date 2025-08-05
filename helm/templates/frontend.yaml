@@ -155,6 +155,10 @@ kind: Service
 metadata:
   name: {{ .Values.frontend.name }}-external
   namespace: {{ .Release.Namespace }}
+  {{- if .Values.frontend.fqdn }}
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "{{ .Values.frontend.fqdn }}"
+  {{- end }}
 spec:
   type: LoadBalancer
   selector:
