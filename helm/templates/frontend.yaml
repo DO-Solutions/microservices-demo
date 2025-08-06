@@ -190,15 +190,37 @@ spec:
 {{- else }}
 # Non-dev deployment: Expose via Ingress
 ---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: letsencrypt-{{ .Values.frontend.name }}
+  namespace: default
+spec:
+  acme:
+    email: null@digitalocean.com
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-{{ .Values.frontend.name }}-private-key
+    solvers:
+      # Use the HTTP-01 challenge provider
+      - http01:
+          ingress:
+            class: nginx
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ .Release.Name }}-{{ .Values.frontend.name }}
   namespace: {{ .Release.Namespace }}
   annotations:
+    cert-manager.io/issuer: letsencrypt-{{ .Values.frontend.name }}
     external-dns.alpha.kubernetes.io/hostname: {{ .Values.frontend.fqdn }}
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+        - {{ .Values.frontend.fqdn }}
+      secretName: {{ .Values.frontend.name }}-tls
   rules:
     - host: {{ .Values.frontend.fqdn }}
       http:
