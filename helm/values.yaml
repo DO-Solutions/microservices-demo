@@ -162,9 +162,13 @@ emailService:
 frontend:
   create: true
   name: frontend
-  externalService: true
+
   # If set then external-dns will attempt to create a record for the service
   fqdn: null
+  # If set to true then will configure TLS and requires cert-manager installed.
+  tls: false
+  # If not set tj
+  letsencryptEmail: null@digitalocean.com
   cymbalBranding: false
   # One of: local, gcp, aws, azure, onprem, alibaba. When not set, defaults to "local" unless running in GKE, otherwise auto-sets to gcp.
   platform: local
