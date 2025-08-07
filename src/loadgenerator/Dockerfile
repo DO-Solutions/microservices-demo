@@ -42,5 +42,6 @@ COPY locustfile.py .
 # enable gevent support in debugger
 ENV GEVENT_SUPPORT=True
 
-ENTRYPOINT ["/bin/sh", "-c", "locust --host=\"$FRONTEND_ADDR\" --headless -u \"${USERS}\" -r \"${RATE}\""]
+# Will automatically follow redirects in case HTTP -> HTTPS redirect in place
+ENTRYPOINT ["/bin/sh", "-c", "locust --host=\"http://$FRONTEND_ADDR\" --headless -u \"${USERS}\" -r \"${RATE}\""]
 
