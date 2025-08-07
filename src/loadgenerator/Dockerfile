@@ -25,6 +25,8 @@ COPY requirements.txt .
 RUN pip install --prefix="/install" -r requirements.txt
 
 FROM base
+ENV USERS=10
+ENV RATE=1
 
 RUN apk update \
     && apk add --no-cache libstdc++ \
@@ -40,4 +42,6 @@ COPY locustfile.py .
 # enable gevent support in debugger
 ENV GEVENT_SUPPORT=True
 
-ENTRYPOINT locust --host="http://${FRONTEND_ADDR}" --headless -u "${USERS:-10}" -r "${RATE:-1}" 2>&1
+# Will automatically follow redirects in case HTTP -> HTTPS redirect in place
+ENTRYPOINT ["/bin/sh", "-c", "locust --host=\"http://$FRONTEND_ADDR\" --headless -u \"${USERS}\" -r \"${RATE}\""]
+
