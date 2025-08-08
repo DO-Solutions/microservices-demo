@@ -74,7 +74,7 @@ spec:
           RETRY_INTERVAL=10
           for i in $(seq 1 $MAX_RETRIES); do
             echo "Attempt $i: Pinging frontend: ${FRONTEND_ADDR}..."
-            STATUSCODE=$(curl -s -L -o /dev/null -w "%{http_code}" http://${FRONTEND_ADDR})
+            STATUSCODE=$(curl -s -k -L -o /dev/null -w "%{http_code}" http://${FRONTEND_ADDR})
             if [ $STATUSCODE -eq 200 ]; then
                 echo "Frontend is reachable."
                 exit 0
