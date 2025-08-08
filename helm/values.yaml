@@ -194,6 +194,8 @@ loadGenerator:
   create: true
   name: loadgenerator
   checkFrontendInitContainer: true
+  users: 10
+  rate: 1
   resources:
     requests:
       cpu: 300m
