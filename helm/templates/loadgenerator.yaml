@@ -109,11 +109,11 @@ spec:
         image: {{ .Values.images.repository }}/microservices-demo-{{ .Values.loadGenerator.name }}:{{ .Values.images.tag | default .Chart.AppVersion }}
         env:
         - name: FRONTEND_ADDR
-          value: "{{ .Values.frontend.name }}:80"
+          value: "{{ default .Values.frontend.name .Values.frontend.fqdn }}"
         - name: USERS
-          value: "10"
+          value: "{{ .Values.loadGenerator.users }}"
         - name: RATE
-          value: "1"
+          value: "{{ .Values.loadGenerator.rate }}"
         resources:
           {{- toYaml .Values.loadGenerator.resources | nindent 10 }}
 {{- if .Values.networkPolicies.create }}
