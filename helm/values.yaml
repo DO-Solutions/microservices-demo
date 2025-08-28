@@ -169,6 +169,11 @@ frontend:
   tls: false
   # If not set tj
   letsencryptEmail: null@digitalocean.com
+  
+  # Gateway resource support - set to false when using Gateway resources with annotated gateway pattern
+  # When false, Issuer and Ingress resources are not created and should be managed outside the Helm chart
+  createIssuer: true
+  createIngress: true
   cymbalBranding: false
   # One of: local, gcp, aws, azure, onprem, alibaba. When not set, defaults to "local" unless running in GKE, otherwise auto-sets to gcp.
   platform: local

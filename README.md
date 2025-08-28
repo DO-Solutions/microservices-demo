@@ -103,6 +103,27 @@ helm install demo oci://ghcr.io/do-solutions/microservices-demo \
   --set devDeployment=false
 ```
 
+### Option 3: Gateway Resource Deployment
+
+When using Gateway resources with the annotated gateway pattern, you can disable the creation of Issuer and Ingress resources since these will be managed outside the Helm chart. This is useful for advanced networking configurations where HTTPRoute resources are created separately.
+
+To deploy with Gateway resource support:
+
+```sh
+helm install demo oci://ghcr.io/do-solutions/microservices-demo \
+  --namespace boutique --create-namespace \
+  --set devDeployment=false \
+  --set frontend.createIssuer=false \
+  --set frontend.createIngress=false
+```
+
+**Important**: When using this deployment option, you must create the following resources outside of the Helm chart:
+* Gateway resource (if not already existing)
+* Issuer resource for cert-manager (if TLS is needed)
+* HTTPRoute resource to route traffic to the frontend service
+
+The frontend service will still be created as a ClusterIP service that your HTTPRoute can reference.
+
 ---
 
 ## Configuration
@@ -110,6 +131,10 @@ helm install demo oci://ghcr.io/do-solutions/microservices-demo \
 Configuration is handled via Helm `values.yaml`. Key toggles include:
 
 * `devDeployment`: Enables or disables in-cluster dependencies
+* `frontend.createIssuer`: Controls creation of cert-manager Issuer resource (default: true)
+* `frontend.createIngress`: Controls creation of Ingress resource (default: true)
+
+When deploying with Gateway resources, set both `frontend.createIssuer` and `frontend.createIngress` to `false` to prevent conflicts with externally managed resources.
 
 See the chart's `values.yaml` for all available configuration options.
 
